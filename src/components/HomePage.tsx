@@ -1,8 +1,9 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Car, Star, Shield, CreditCard, Wrench } from "lucide-react";
+import { CarImageGallery } from "./figma/CarImageGallery";
+import { Car, Shield, CreditCard, Wrench } from "lucide-react";
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -42,7 +43,15 @@ export function HomePage({ onNavigate }: HomePageProps) {
       fuel: "Бензин",
       type: "used",
       model: "VIII (XV70)",
-      image: "https://images.unsplash.com/photo-1669254382169-5b40120ee577?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZXclMjBzZWRhbiUyMGNhcnxlbnwxfHx8fDE3NTkxNDM0MTZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
+      images: [
+        "/src/assets/1.webp",
+        "/src/assets/2.webp", 
+        "/src/assets/3.webp",
+        "/src/assets/4.webp",
+        "/src/assets/5.webp",
+        "/src/assets/6.webp"
+      ],
+      image: "/src/assets/1.webp"
     },
     {
       id: 2,
@@ -53,6 +62,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
       fuel: "Бензин",
       type: "new",
       model:"IV (G05/G18)",
+      images: [
+        "https://images.unsplash.com/photo-1570829194611-71a926d70ff8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzdXYlMjBjYXJ8ZW58MXx8fHwxNzU5MTE5Njc5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+        "https://images.unsplash.com/photo-1555215695-3004980ad54e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzh8MHwxfHNlYXJjaHwxfHxibXclMjB4NSUyMGludGVyaW9yfGVufDF8fHx8MTc1OTE0NDI0Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+        "https://images.unsplash.com/photo-1555215695-3004980ad54e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzh8MHwxfHNlYXJjaHwxfHxibXclMjB4NSUyMGV4dGVyaW9yfGVufDF8fHx8MTc1OTE0NDI0Nnww&ixlib=rb-4.1.0&q=80&w=1080"
+      ],
       image: "https://images.unsplash.com/photo-1570829194611-71a926d70ff8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzdXYlMjBjYXJ8ZW58MXx8fHwxNzU5MTE5Njc5fDA&ixlib=rb-4.1.0&q=80&w=1080"
     }
   ];
@@ -123,15 +137,11 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <h2 className="text-3xl font-bold mb-4">Рекомендуемые автомобили</h2>
             <p className="text-gray-600">Лучшие предложения этой недели</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-2 gap-8">
             {featuredCars.map((car) => (
               <Card key={car.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="relative">
-                  <ImageWithFallback
-                    src={car.image}
-                    alt={car.name}
-                    className="w-full h-48 object-cover"
-                  />
+                  <CarImageGallery images={car.images} carName={car.name} />
                   <Badge 
                     className={`absolute top-4 right-4 ${
                       car.type === 'new' ? 'bg-green-500' : 'bg-blue-500'
@@ -149,12 +159,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 <CardContent>
                   <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-4">
                     <div>Год: <b>{car.year}</b></div>
-                    <div className="whitespace-nowrap  justify-self-end items-center">Пробег: <b>{car.mileage}</b></div>
-                    {/* <div className="flex items-center">
-                    <div>Цвет: <br /><b>Черный</b></div>
-                    </div>
-                    <div className="whitespace-nowrap b-b">Топливо: <br /> <b>{car.fuel}</b></div> */}
-                    
+                    <div className="whitespace-nowrap justify-self-end">Пробег: <b>{car.mileage} км</b></div>
+                    <div>Топливо: <b>{car.fuel}</b></div>
                   </div>
                   <Button className="w-full bg-blue-600 hover:bg-blue-700">
                     Подробнее
