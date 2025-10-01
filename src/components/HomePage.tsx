@@ -56,16 +56,21 @@ export function HomePage({ onNavigate }: HomePageProps) {
     {
       id: 2,
       name: "BMW X5",
-      price: "$65,000",
+      price: "12 000 000 ₽",
       year: "2023г",
       mileage: "0",
       fuel: "Бензин",
       type: "new",
       model:"IV (G05/G18)",
       images: [
-        "https://images.unsplash.com/photo-1570829194611-71a926d70ff8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzdXYlMjBjYXJ8ZW58MXx8fHwxNzU5MTE5Njc5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-        "https://images.unsplash.com/photo-1555215695-3004980ad54e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzh8MHwxfHNlYXJjaHwxfHxibXclMjB4NSUyMGludGVyaW9yfGVufDF8fHx8MTc1OTE0NDI0Nnww&ixlib=rb-4.1.0&q=80&w=1080",
-        "https://images.unsplash.com/photo-1555215695-3004980ad54e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzh8MHwxfHNlYXJjaHwxfHxibXclMjB4NSUyMGV4dGVyaW9yfGVufDF8fHx8MTc1OTE0NDI0Nnww&ixlib=rb-4.1.0&q=80&w=1080"
+        "/src/assets/21.webp",
+        "/src/assets/22.webp", 
+        "/src/assets/23.webp",
+        "/src/assets/24.webp",
+        "/src/assets/25.webp",
+        "/src/assets/26.webp",
+        "/src/assets/27.webp",
+        "/src/assets/28.webp",
       ],
       image: "https://images.unsplash.com/photo-1570829194611-71a926d70ff8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzdXYlMjBjYXJ8ZW58MXx8fHwxNzU5MTE5Njc5fDA&ixlib=rb-4.1.0&q=80&w=1080"
     }

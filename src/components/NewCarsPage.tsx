@@ -5,12 +5,19 @@ import { Badge } from "./ui/badge";
 import { Input } from "./ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Search, Filter, Star, Fuel, Zap, Shield, Car } from "lucide-react";
+import { Search, Filter, Star, Fuel, Zap, Shield, Car, ChevronDown, ChevronUp } from "lucide-react";
+import { CarImageGallery } from "./figma/CarImageGallery";
 
 export function NewCarsPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [priceFilter, setPriceFilter] = useState("");
   const [brandFilter, setBrandFilter] = useState("");
+  const [transmissionFilter, setTransmissionFilter] = useState("");
+  const [engineFilter, setEngineFilter] = useState("");
+  const [driveFilter, setDriveFilter] = useState("");
+  const [bodyFilter, setBodyFilter] = useState("");
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   const newCars = [
     {
@@ -18,11 +25,20 @@ export function NewCarsPage() {
       name: "Toyota Camry 2025",
       brand: "Toyota",
       year: 2025,
-      price: 32000,
+      price: 3200000,
       fuel: "Гибрид",
       bodyType: "Седан",
-      rating: 4.9,
-      image: "https://images.unsplash.com/photo-1669254382169-5b40120ee577?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZXclMjBzZWRhbiUyMGNhcnxlbnwxfHx8fDE3NTkxNDM0MTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      transmission: "Автомат",
+      engine: "2.5L Hybrid",
+      drive: "Передний",
+      images: [
+        "/src/assets/1.webp",
+        "/src/assets/2.webp", 
+        "/src/assets/3.webp",
+        "/src/assets/4.webp",
+        "/src/assets/5.webp",
+        "/src/assets/6.webp"
+      ],
       warranty: "5 лет",
       features: ["Adaptive Cruise Control", "Lane Keep Assist", "Wireless Charging"],
       isElectric: false,
@@ -33,42 +49,46 @@ export function NewCarsPage() {
       name: "BMW X5 2025",
       brand: "BMW",
       year: 2025,
-      price: 68000,
+      price: 6800000,
       fuel: "Бензин",
       bodyType: "SUV",
-      rating: 4.8,
-      image: "https://images.unsplash.com/photo-1570829194611-71a926d70ff8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBzdXYlMjBjYXJ8ZW58MXx8fHwxNzU5MTE5Njc5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      transmission: "Автомат",
+      engine: "3.0L Turbo",
+      drive: "Полный",
       warranty: "4 года",
+      images: [
+        "/src/assets/21.webp",
+        "/src/assets/22.webp", 
+        "/src/assets/23.webp",
+        "/src/assets/24.webp",
+        "/src/assets/25.webp",
+        "/src/assets/26.webp",
+        "/src/assets/27.webp",
+        "/src/assets/28.webp",
+      ],
       features: ["xDrive", "Panoramic Roof", "Harman Kardon Audio"],
       isElectric: false,
       isNew: true
     },
     {
       id: 3,
-      name: "Tesla Model 3 2025",
-      brand: "Tesla",
-      year: 2025,
-      price: 45000,
-      fuel: "Электро",
-      bodyType: "Седан",
-      rating: 4.7,
-      image: "https://images.unsplash.com/photo-1665491641262-53155eaac2b0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBjYXIlMjBpbnRlcmlvcnxlbnwxfHx8fDE3NTkwODc2MjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      warranty: "8 лет",
-      features: ["Autopilot", "Supercharging", "Over-the-Air Updates"],
-      isElectric: true,
-      isNew: true
-    },
-    {
-      id: 4,
       name: "Honda CR-V 2025",
       brand: "Honda",
       year: 2025,
-      price: 35000,
+      price: 3500000,
       fuel: "Гибрид",
       bodyType: "SUV",
-      rating: 4.6,
-      image: "https://images.unsplash.com/photo-1632081832555-f4971d8dc3bc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBjYXIlMjBkZWFsZXJzaGlwfGVufDF8fHx8MTc1OTE0Mjg0MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      transmission: "Вариатор",
+      engine: "2.0L Hybrid",
+      drive: "Полный",
       warranty: "5 лет",
+      images: [
+        "/src/assets/31.webp",
+        "/src/assets/32.webp", 
+        "/src/assets/33.webp",
+        "/src/assets/34.webp",
+        "/src/assets/35.webp",
+      ],
       features: ["Honda Sensing", "AWD", "Remote Start"],
       isElectric: false,
       isNew: true
@@ -78,58 +98,78 @@ export function NewCarsPage() {
       name: "Mazda CX-5 2025",
       brand: "Mazda",
       year: 2025,
-      price: 33000,
+      price: 3300000,
       fuel: "Бензин",
       bodyType: "SUV",
-      rating: 4.5,
-      image: "https://images.unsplash.com/photo-1690911982279-9d4732c02866?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx1c2VkJTIwY2FyJTIwbG90fGVufDF8fHx8MTc1OTE0MzQxNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      transmission: "Автомат",
+      engine: "2.5L",
+      drive: "Передний",
       warranty: "3 года",
+      images:[
+        "/src/assets/41.jpg",
+        "/src/assets/42.jpg",
+      ],
       features: ["i-ACTIVSENSE", "SKYACTIV Technology", "Premium Interior"],
-      isElectric: false,
-      isNew: true
-    },
-    {
-      id: 6,
-      name: "Audi A4 2025",
-      brand: "Audi",
-      year: 2025,
-      price: 42000,
-      fuel: "Бензин",
-      bodyType: "Седан",
-      rating: 4.8,
-      image: "https://images.unsplash.com/photo-1669254382169-5b40120ee577?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuZXclMjBzZWRhbiUyMGNhcnxlbnwxfHx8fDE3NTkxNDM0MTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      warranty: "4 года",
-      features: ["quattro AWD", "Virtual Cockpit", "Bang & Olufsen Audio"],
       isElectric: false,
       isNew: true
     }
   ];
 
   const brands = ["Toyota", "BMW", "Tesla", "Honda", "Mazda", "Audi"];
-  const priceRanges = [
-    { label: "До $35,000", value: "0-35000" },
-    { label: "$35,000 - $50,000", value: "35000-50000" },
-    { label: "$50,000 - $70,000", value: "50000-70000" },
-    { label: "Свыше $70,000", value: "70000+" }
-  ];
+  const transmissions = ["Автомат", "Вариатор", "Робот", "Механика"];
+  const engines = ["2.0L", "2.5L", "3.0L", "2.0L Hybrid", "2.5L Hybrid", "Electric"];
+  const drives = ["Передний", "Задний", "Полный"];
+  const bodyTypes = ["Седан", "SUV", "Хэтчбек", "Универсал", "Купе", "Минивэн"];
+
+  // Автоматическое определение минимальной и максимальной цены
+  const minCarPrice = Math.min(...newCars.map(car => car.price));
+  const maxCarPrice = Math.max(...newCars.map(car => car.price));
 
   const filteredCars = newCars.filter(car => {
-    const matchesSearch = car.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         car.brand.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = car.name.toLowerCase().includes(searchTerm.toLowerCase()) ||car.brand.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesBrand = !brandFilter || car.brand === brandFilter;
     
+    // Фильтрация по цене
     let matchesPrice = true;
-    if (priceFilter) {
-      const [min, max] = priceFilter.split('-').map(p => p.replace('+', ''));
-      if (max) {
-        matchesPrice = car.price >= parseInt(min) && car.price <= parseInt(max);
-      } else {
-        matchesPrice = car.price >= parseInt(min);
-      }
+    if (minPrice || maxPrice) {
+      const carPrice = car.price;
+      const min = minPrice ? parseInt(minPrice) : minCarPrice;
+      const max = maxPrice ? parseInt(maxPrice) : maxCarPrice;
+      
+      matchesPrice = carPrice >= min && carPrice <= max;
     }
 
-    return matchesSearch && matchesBrand && matchesPrice;
+    const matchesTransmission = !transmissionFilter || car.transmission === transmissionFilter;
+    const matchesEngine = !engineFilter || car.engine === engineFilter;
+    const matchesDrive = !driveFilter || car.drive === driveFilter;
+    const matchesBody = !bodyFilter || car.bodyType === bodyFilter;
+
+    return matchesSearch && matchesBrand && matchesPrice && 
+           matchesTransmission && matchesEngine && matchesDrive && matchesBody;
   });
+
+  const resetAllFilters = () => {
+    setSearchTerm("");
+    setBrandFilter("");
+    setMinPrice("");
+    setMaxPrice("");
+    setTransmissionFilter("");
+    setEngineFilter("");
+    setDriveFilter("");
+    setBodyFilter("");
+  };
+
+  const handleMinPriceChange = (value: string) => {
+    // Удаляем все нецифровые символы
+    const numericValue = value.replace(/\D/g, '');
+    setMinPrice(numericValue);
+  };
+
+  const handleMaxPriceChange = (value: string) => {
+    // Удаляем все нецифровые символы
+    const numericValue = value.replace(/\D/g, '');
+    setMaxPrice(numericValue);
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -153,11 +193,24 @@ export function NewCarsPage() {
 
       {/* Filters */}
       <div className="bg-white p-6 rounded-lg shadow-sm border mb-8">
-        <div className="flex items-center gap-4 mb-4">
-          <Filter className="h-5 w-5 text-gray-500" />
-          <span className="font-medium">Фильтры</span>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-4">
+            <Filter className="h-5 w-5 text-gray-500" />
+            <span className="font-medium">Фильтры</span>
+          </div>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+            className="flex items-center gap-1"
+          >
+            Расширенные фильтры
+            {showAdvancedFilters ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </Button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        
+        {/* Basic filters */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
           <div className="relative">
             <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
             <Input
@@ -178,30 +231,90 @@ export function NewCarsPage() {
               ))}
             </SelectContent>
           </Select>
-          <Select value={priceFilter} onValueChange={setPriceFilter}>
-            <SelectTrigger>
-              <SelectValue placeholder="Ценовой диапазон" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Любая цена</SelectItem>
-              {priceRanges.map((range) => (
-                <SelectItem key={range.value} value={range.value}>
-                  {range.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <Input
+                placeholder={`От ${minCarPrice.toLocaleString()}`}
+                value={minPrice}
+                onChange={(e) => handleMinPriceChange(e.target.value)}
+                className="pr-8"
+              />
+              <span className="absolute right-3 top-3 text-xs text-gray-500">₽</span>
+            </div>
+            <div className="relative flex-1">
+              <Input
+                placeholder={`До ${maxCarPrice.toLocaleString()}`}
+                value={maxPrice}
+                onChange={(e) => handleMaxPriceChange(e.target.value)}
+                className="pr-8"
+              />
+              <span className="absolute right-3 top-3 text-xs text-gray-500">₽</span>
+            </div>
+          </div>
+          
           <Button 
             variant="outline" 
-            onClick={() => {
-              setSearchTerm("");
-              setBrandFilter("");
-              setPriceFilter("");
-            }}
+            onClick={resetAllFilters}
           >
-            Сбросить
+            Сбросить все
           </Button>
         </div>
+
+        {/* Advanced filters */}
+        {showAdvancedFilters && (
+          <div className="pt-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <Select value={transmissionFilter} onValueChange={setTransmissionFilter}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Коробка передач" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Любая коробка</SelectItem>
+                  {transmissions.map((transmission) => (
+                    <SelectItem key={transmission} value={transmission}>{transmission}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={engineFilter} onValueChange={setEngineFilter}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Двигатель" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Любой двигатель</SelectItem>
+                  {engines.map((engine) => (
+                    <SelectItem key={engine} value={engine}>{engine}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={driveFilter} onValueChange={setDriveFilter}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Привод" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Любой привод</SelectItem>
+                  {drives.map((drive) => (
+                    <SelectItem key={drive} value={drive}>{drive}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select value={bodyFilter} onValueChange={setBodyFilter}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Кузов" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Любой кузов</SelectItem>
+                  {bodyTypes.map((body) => (
+                    <SelectItem key={body} value={body}>{body}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Results count */}
@@ -216,25 +329,14 @@ export function NewCarsPage() {
         {filteredCars.map((car) => (
           <Card key={car.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
             <div className="relative">
-              <ImageWithFallback
-                src={car.image}
-                alt={car.name}
-                className="w-full h-48 object-cover"
-              />
+              <CarImageGallery images={car.images} carName={car.name} />
               <div className="absolute top-4 left-4 flex gap-2">
-                <Badge className="bg-green-600">
-                  Новый
-                </Badge>
                 {car.isElectric && (
                   <Badge className="bg-yellow-500">
                     <Zap className="h-3 w-3 mr-1" />
                     Электро
                   </Badge>
                 )}
-              </div>
-              <div className="absolute top-4 right-4 bg-white rounded-full px-2 py-1 text-sm flex items-center">
-                <Star className="h-3 w-3 text-yellow-400 mr-1" />
-                {car.rating}
               </div>
             </div>
             
@@ -245,7 +347,7 @@ export function NewCarsPage() {
                   <p className="text-sm text-gray-600">{car.bodyType}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xl font-bold text-green-600">${car.price.toLocaleString()}</p>
+                  <p className="text-xl font-bold text-green-600">{car.price.toLocaleString()} ₽</p>
                 </div>
               </CardTitle>
             </CardHeader>
@@ -259,6 +361,14 @@ export function NewCarsPage() {
                 <div className="flex items-center">
                   <Shield className="h-4 w-4 mr-1" />
                   Гарантия {car.warranty}
+                </div>
+                <div className="flex items-center">
+                  <span className="text-xs">Коробка:</span>
+                  <span className="ml-1">{car.transmission}</span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-xs">Привод:</span>
+                  <span className="ml-1">{car.drive}</span>
                 </div>
               </div>
               
@@ -314,12 +424,12 @@ export function NewCarsPage() {
             <p className="text-gray-600 text-sm">До 8 лет гарантии от производителя</p>
           </div>
           <div className="text-center">
-            <Zap className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <Zap className="h-12 w-12 text-green-600 mx-auto mb-4" />
             <h3 className="font-semibold mb-2">Новейшие технологии</h3>
             <p className="text-gray-600 text-sm">Современные системы безопасности и комфорта</p>
           </div>
           <div className="text-center">
-            <Star className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+            <Star className="h-12 w-12 text-green-600 mx-auto mb-4" />
             <h3 className="font-semibold mb-2">Лучший сервис</h3>
             <p className="text-gray-600 text-sm">Бесплатное ТО в течение гарантийного периода</p>
           </div>

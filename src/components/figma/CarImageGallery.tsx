@@ -40,7 +40,7 @@ export function CarImageGallery({ images, carName }: CarImageGalleryProps) {
 
   return (
     <div 
-      className="relative w-full h-48 overflow-hidden bg-gray-100 cursor-pointer rounded-lg"
+      className="relative w-full h-64 overflow-hidden bg-gray-100 cursor-pointer rounded-lg"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
